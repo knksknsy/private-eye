@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-view.component.scss']
 })
 export class HomeViewComponent implements OnInit {
+  public piID: string;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public handleMap(id) {
+    this.piID = id;
   }
 
 }

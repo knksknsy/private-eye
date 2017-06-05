@@ -1,0 +1,11 @@
+<div *ngIf="chartData && chartLabels" class="card card-inverse">
+  <div class="card-header">{{title}} in {{unit}}</div>
+  <div class="card-block">
+    <canvas id="{{canvasID}}"></canvas>
+  </div>
+  <div class="card-footer">
+    <h6 class="card-title">{{chartData[chartData.length - 1]}} {{unit}}</h6>
+    <p class="card-text text-muted">min: {{minMaxValue?.min}} {{unit}}</p>
+    <p class="card-text text-muted">max: {{minMaxValue?.max}} {{unit}}</p>
+  </div>
+</div>

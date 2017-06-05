@@ -16,13 +16,14 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AppComponent } from './app.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { DashboardChartCardComponent } from './components/dashboard-chart-card/dashboard-chart-card.component';
+import { DashboardLiveCardComponent } from './components/dashboard-live-card/dashboard-live-card.component';
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { MapComponent } from './components/map/map.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // services
 import { EnvironmentDataService } from './services/environment-data.service';
+import { PIService } from './services/pi.service';
 
 // pipes
 import { DatePipe } from '@angular/common';
@@ -32,7 +33,7 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     MenuBarComponent,
     MenuComponent,
-    DashboardChartCardComponent,
+    DashboardLiveCardComponent,
     HomeViewComponent,
     MapComponent,
     DashboardComponent
@@ -46,7 +47,7 @@ import { DatePipe } from '@angular/common';
     CollapseModule.forRoot(),
     AppRoutingModule
   ],
-  providers: [EnvironmentDataService, DatePipe],
+  providers: [EnvironmentDataService, PIService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

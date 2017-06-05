@@ -2,3 +2,16 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 /* You can add global styles to this file, and also import other style files */
+
+.leaflet-container {
+    background-color: #191a1a;
+}
+
+.card.card-inverse {
+    background-color: #191a1a;
+    border-color: #1C77B8;
+}
+
+body {
+    background-color: #292B2C;
+}

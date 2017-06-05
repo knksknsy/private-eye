@@ -8,8 +8,8 @@ export class EnvironmentDataService {
 
   constructor(private http: Http, private datePipe: DatePipe) { }
 
-  getTempLiveData(pi_id: string) {
-    return this.http.get('http://localhost:3000/temp/month/' + pi_id)
+  getLiveData(pi_id: string, sensor: string, mode: string) {
+    return this.http.get('http://localhost:3000/' + sensor + '/' + mode + '/' + pi_id)
       .map((res) => res.json());
   }
 
@@ -23,7 +23,7 @@ export class EnvironmentDataService {
     return formatedLabels;
   }
 
-  getMinMaxTemperature(data: Array<Number>): { min: number, max: number } {
+  getMinMaxValue(data: Array<Number>): { min: number, max: number } {
     return { min: Math.min.apply(null, data), max: Math.max.apply(null, data) };
   }
 

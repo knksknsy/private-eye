@@ -1,3 +1,8 @@
-<p>
-  dashboard works!
-</p>
+<div class="container-fluid">
+    <div class="card-deck">
+        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Temperatur" unit="°C"></app-dashboard-live-card>
+        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Luftdruck" unit="Pa"></app-dashboard-live-card>
+        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Höhenlage" unit="m"></app-dashboard-live-card>
+        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Luftfeuchtigkeit" unit="%"></app-dashboard-live-card>
+    </div>
+</div>

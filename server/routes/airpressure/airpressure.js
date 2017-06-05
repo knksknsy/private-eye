@@ -34,8 +34,9 @@ router.post('/new', (req, res) => {
                 pressure_Pa: req.body.pressure_Pa,
                 altitude_m: req.body.altitude_m
             },
-            (err) => {
+            (err, data) => {
                 if (err) return res.status(500);
+                if (data) res.send(200);
             }
         );
     });

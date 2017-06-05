@@ -1,3 +1,9 @@
 #map {
-    height: 400px;
+    height: calc(100vh - 55px);
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+}
+
+#map.minimized {
+    height: calc(33vh - 55px);
 }

@@ -1,4 +1,2 @@
-<app-map></app-map>
-<div class="card-deck">
-    <app-dashboard-chart-card></app-dashboard-chart-card>
-</div>
+<app-map (onMarkerClicked)="handleMap($event)"></app-map>
+<app-dashboard *ngIf="piID" [piID]="piID"></app-dashboard>
