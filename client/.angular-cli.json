@@ -19,6 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/bootstrap/scss/bootstrap.scss",
+        "../node_modules/font-awesome/scss/font-awesome.scss",
         "styles.scss"
       ],
       "scripts": [],
@@ -51,6 +53,10 @@
     }
   },
   "defaults": {
+    "serve": {
+      "port": 4200,
+      "host": "0.0.0.0"
+    },
     "styleExt": "scss",
     "component": {}
   }

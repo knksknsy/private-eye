@@ -1,0 +1,143 @@
+.menu-content{
+	> div{
+		cursor: pointer;
+	}
+	
+	h3{
+		color: rgba(255,255,255,.7);
+		position: absolute;
+		top: 20vh;
+
+		&.left{
+			right: 60px;
+		}
+
+		&.right{
+			left: 60px;
+		}
+
+		span{
+			position: relative;
+			display: block;
+			font-size: 4rem;
+			margin-bottom: 20px;
+			text-shadow: 2px 2px 7px grey;
+			&.fa-heart{
+				left: 45px;
+			}
+		}
+	}
+
+	&.below{
+		h3{
+			top: 50vh;
+
+			&.left{
+				right: 20px;
+			}
+			&.right{
+				left: 65px;
+			}
+
+			span{
+				position: relative;
+
+				&.fa-list-ul{
+					left: 65px;
+				}
+				&.fa-star{
+					left: 45px;
+				}
+			}
+		}
+	}
+
+}
+
+/* 
+*  phone landscape
+*/
+@media (min-width: 667px) and (max-width: 767px){
+	.menu-content{
+		h3{
+			top: 7vh;
+
+			span{
+				font-size: 2rem;
+				&.fa-heart{
+					left: 60px;
+				}
+			}
+		}
+
+		&.below{
+			h3{
+				top: 37vh;
+
+				span{
+
+					&.fa-list-ul{
+						left: 75px;
+					}
+					&.fa-star{
+						left: 55px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* 
+*  phone portrait
+*/
+@media (max-width: 375px){
+	.menu-content{
+		h3{
+			top: 15vh;
+			font-size: 1rem;
+
+
+			&.left{
+				right: auto;
+				left: 65px;
+			}
+
+			&.right{
+				left: auto !important;
+				right: 45px;
+			}
+
+			span{
+				font-size: 2rem;
+				&.fa-heart{
+					left: 33px;
+				}
+			}
+		}
+
+		&.below{
+			h3{
+				top: 37vh;
+
+				&.left{
+					left: 45px;
+				}
+				&.right{
+					right: 45px;
+				}
+
+
+				span{
+
+					&.fa-list-ul{
+						left: 45px;
+					}
+					&.fa-star{
+						left: 35px;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+<nav class="navbar fixed-top navbar-inverse bg-inverse">
+  <div class="row">
+    <div class="col-md-8">
+      <a role="button" (click)="leftMenuCollapsed = !leftMenuCollapsed; lockBodyScroll()" class="menu-button btn-margin-right"><span class="{{!leftMenuCollapsed ? 'fa fa-bars' : 'fa fa-times'}}"></span></a>
+      <a class="navbar-brand" routerLink="/">
+        <img src="/assets/icons/private-eye.png" width="30" height="30" class="d-inline-block align-top" /> Private Eye
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="!leftMenuCollapsed" class="card card-block card-header">
+  <app-menu (onMenuItemSelected)="leftMenuCollapsed = !leftMenuCollapsed"></app-menu>
+</div>
