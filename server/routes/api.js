@@ -10,7 +10,7 @@ const express = require('express');
 const router = express.Router();
 
 const airpressure = require('./airpressure/airpressure');
-const temp = require('./airpressure/temp');
+const temp = require('./temp/temp');
 
 router.get('/', (req, res) => {
     res.send('api works');

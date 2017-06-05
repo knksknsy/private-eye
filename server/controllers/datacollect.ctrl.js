@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 const time = require('time');
 var timeZoneCtrl = require('./timezone.ctrl');
 
+
 const ranges = {
     live: 'live',
     day: 'day',
@@ -22,10 +23,11 @@ const ranges = {
 module.exports.ranges = ranges;
 
 /**
- * Collects live- and previous 6 hours of arbitrary AirPressure  data
+ * Collects data of an arbitrary MongoDB's model by predefined ranges.
  * 
  * @param {String} pi_ID ObjectId of MongoDB's PI model
- * @param {String} model_sensor String of an arbitrary model attribute. E.g.: temp_C for AirPressure model. For more models look in '../models' directory.
+ * @param {String} mongo_model String of an arbitrary MongoDB model. E.g.: 'AirPressure' model. For more models look in '../models' directory.
+ * @param {String} model_sensor String of an arbitrary model attribute. E.g.: 'temp_C' for AirPressure model. For more models look in '../models' directory.
  * @returns Promise<{any}>
  */
 module.exports.collectDataByRange = function (pi_ID, mongo_model, model_sensor, range) {
@@ -67,11 +69,6 @@ module.exports.collectDataByRange = function (pi_ID, mongo_model, model_sensor, 
                 endDate.setTimezone(timezone);
                 startDate.setTimezone(timezone);
 
-                // dev setting
-                endDate.setDate(endDate.getDate() - 1);
-                startDate.setDate(startDate.getDate() - 1);
-                //
-
                 mongoose.model(mongo_model)
                     .find({ pi_id: pi_ID })
                     .where('datetime').gte(startDate).lte(endDate)
@@ -81,11 +78,21 @@ module.exports.collectDataByRange = function (pi_ID, mongo_model, model_sensor, 
                         if (err) {
                             reject(err);
                         };
-                        let map = [];
-                        modelData.forEach((data) => {
-                            map.push({ x: data.datetime, y: data[model_sensor] });
+                        // // Data structure version 1
+                        // let map = [];
+                        // modelData.forEach((data) => {
+                        //     map.push({ x: data.datetime, y: data[model_sensor] });
+                        // });
+                        // resolve(map);
+
+                        // Data structure version 2
+                        let xAxis = [];
+                        let yAxis = [];
+                        modelData.forEach((element) => {
+                            xAxis.push(element.datetime);
+                            yAxis.push(element[model_sensor]);
                         });
-                        resolve(map);
+                        resolve({ data: yAxis, labels: xAxis });
                     });
             })
             .catch((error) => reject(error));

@@ -11,8 +11,8 @@ var Schema = mongoose.Schema;
 
 var PISchema = Schema({
     _id: { type: String, required: true, unique: true },
-    longitude: Number,
-    latitude: Number
+    latitude: Number,
+    longitude: Number
 });
 
 mongoose.model('PI', PISchema);
