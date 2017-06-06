@@ -6,20 +6,23 @@
 *  MIT License
 */
 
+const airpressure = 'AirPressure';
+const humidity = 'Humidity';
+// const mongoModel = 'ModelName';
+
 module.exports = {
-    airPressure: { 
-        model: 'AirPressure',
-        sensors: {
-            temp: 'temp_C',
-            pressure: 'pressure_Pa',
-            altitude: 'altitude_m'
-        }
+    sensors: {
+        // 'sensorName' : { model: mongoModel, name: 'mongoSensorName'}
+        'temp': { model: airpressure, name: 'temp_C' },
+        'airpressure': { model: airpressure, name: 'pressure_Pa' },
+        'altitude': { model: airpressure, name: 'altitude_m' },
+        'humidity': { model: humidity, name: 'humidity_pct' }
     },
-    humidity: {
-        model: 'Humidity',
-        sensors: {
-            temp: 'temp_C',
-            humidity: 'humidity_pct'
-        }
+    ranges: {
+        live: 'live',
+        day: 'day',
+        week: 'week',
+        month: 'month',
+        year: 'year'
     }
 }

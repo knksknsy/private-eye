@@ -11,21 +11,16 @@ const router = express.Router();
 
 var mongoose = require('mongoose');
 var AirPressureModel = mongoose.model('AirPressure');
-var HumidityModel = mongoose.model('Humidity');
 var PIModel = mongoose.model('PI');
 
-router.get('/', (req, res) => {
-    res.send('airpressure endpoint works');
-});
-
 // Weather data is added every 1 or 5 minutes
-router.post('/new', (req, res) => {
+router.get('/', (req, res) => {
     if (!req.body || !req.body.pi_ID || !req.body.datetime || !req.body.temp_C || !req.body.pressure_Pa || !req.body.altitude_m) {
         return res.status(500);
     }
     // check if pi_ID is registered
     PIModel.findById({ _id: req.body.pi_ID }, (err, pi) => {
-        if (err) res.status(403);
+        if (err) return res.status(403);
         AirPressureModel.create(
             {
                 pi_id: pi._id,
@@ -36,7 +31,7 @@ router.post('/new', (req, res) => {
             },
             (err, data) => {
                 if (err) return res.status(500);
-                if (data) res.send(200);
+                if (data) return res.send(200);
             }
         );
     });
