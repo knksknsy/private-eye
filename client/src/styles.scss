@@ -3,8 +3,12 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-.leaflet-container {
-    background-color: #191a1a;
+.leaflet-container.light {
+    background-color: rgb(204, 210, 212);
+}
+
+.leaflet-container.dark {
+    background-color: rgba(33, 32, 34, 0.67);
 }
 
 .card.card-inverse {

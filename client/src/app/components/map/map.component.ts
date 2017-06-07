@@ -11,24 +11,39 @@ import { PIService } from '../../services/pi.service';
 export class MapComponent implements OnInit {
   @Output() public onMarkerClicked: EventEmitter<any> = new EventEmitter();
   public map: any;
-  public markers: Array<Array<Number>> = [];
-  public options: { id: string };
   public isMapMinimized: boolean = false;
   public maximizedMapHeight: number;
   public minimizedMapHeight: number;
-  public design: string = "dark";
+  public styles: Array<{ style: string, selected: boolean }> = [
+    { style: 'light_all', selected: true },
+    { style: 'dark_all', selected: false }
+  ];
+  public lightStyle: boolean = true;
+  public tileServer: string = `https://cartodb-basemaps-{s}.global.ssl.fastly.net/{style}/{z}/{x}/{y}.png`;
+  public lightMap: any;
+  public darkMap: any;
+  public maxZoom: number = 18;
+  public attribution: string = 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.';
+  public mapLoaded: boolean = false;
 
   constructor(private piService: PIService, private router: Router) { }
 
   ngOnInit() {
-    // set coordinates according to client's position
-    navigator.geolocation.getCurrentPosition((location) => {
-      if (!location) {
-        this.initMap(48.759357, 9.162598);
-      } else {
-        this.initMap(location.coords.latitude, location.coords.longitude);
-      }
+    this.initLayers();
+    this.getLocation();
+  }
+
+  initLayers() {
+    this.lightMap = L.tileLayer(this.tileServer, {
+      maxZoom: this.maxZoom,
+      style: 'light_all',
+      attribution: this.attribution
     });
+    this.darkMap = L.tileLayer(this.tileServer, {
+      maxZoom: this.maxZoom,
+      style: 'dark_all',
+      attribution: this.attribution
+    })
   }
 
   initMap(lat: number, lng: number): any {
@@ -53,10 +68,9 @@ export class MapComponent implements OnInit {
     //   iconAnchor: [49,25]
     // });
 
-    L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}`, {
-      maxZoom: 18,
-      accessToken: 'pk.eyJ1IjoiZHNjaGVuZ2lzIiwiYSI6ImNqM2swYm1yZjAwNDEzMnA5eGpkeWV2b2YifQ.u4c09v8K-TaPSgMC6VCJhA'
-    }).addTo(this.map);
+    this.map.addLayer(this.lightMap);
+
+    this.isMapLoaded();
 
     this.piService.getPIs()
       .subscribe((pis) => {
@@ -64,23 +78,49 @@ export class MapComponent implements OnInit {
           // let marker = L.marker([element.latitude, element.longitude], { icon: icon, id: element._id })
           let marker = L.marker([element.latitude, element.longitude], { id: element._id })
             .on('click', (event) => {
-                console.log(event);
-                this.onMarkerClicked.emit(event.target.options.id);
-                this.isMapMinimized = true;
-                this.map.invalidateSize();
-                setTimeout(() => {
-                  this.minimizedMapHeight = document.getElementById('map').offsetHeight / 2;
-                  this.map.panToOffset(event.target.getLatLng(), [0, -(this.maximizedMapHeight - this.minimizedMapHeight)]);
-                }, 10);
+              this.onMarkerClicked.emit(event.target.options.id);
+              this.isMapMinimized = true;
+              this.map.invalidateSize();
+              setTimeout(() => {
+                this.minimizedMapHeight = document.getElementById('map').offsetHeight / 2;
+                this.map.panToOffset(event.target.getLatLng(), [0, -(this.maximizedMapHeight - this.minimizedMapHeight)]);
+              }, 10);
             })
             .addTo(this.map);
         });
       });
   }
 
+  public getLocation() {
+    // set coordinates according to client's position
+    navigator.geolocation.getCurrentPosition((location) => {
+      if (!location) {
+        this.initMap(48.759357, 9.162598);
+      } else {
+        this.initMap(location.coords.latitude, location.coords.longitude);
+      }
+    });
+  }
+
+  public isMapLoaded() {
+    let map = document.getElementsByClassName('leaflet-container');
+    this.mapLoaded = map.length > 0 ? true : false;
+  }
+
+  public changeMapStyle() {
+    if (this.lightStyle) {
+      this.map.removeLayer(this.lightMap);
+      this.map.addLayer(this.darkMap);
+    } else {
+      this.map.removeLayer(this.darkMap);
+      this.map.addLayer(this.lightMap);
+    }
+    this.lightStyle = !this.lightStyle;
+  }
+
   public onMouseDown() {
     this.isMapMinimized = false;
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
 }

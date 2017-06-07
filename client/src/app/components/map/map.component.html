@@ -1,1 +1,10 @@
-<div id="map" (mousedown)="onMouseDown()" [ngClass]="{ minimized: isMapMinimized }"></div>
+<div class="span9" [ngClass]="{ minimized: isMapMinimized }">
+    <div class="map-wrapper">
+        <div id="map" (mousedown)="onMouseDown()" [ngClass]="{ minimized: isMapMinimized, light: lightStyle, dark: !lightStyle }"></div>
+        <div *ngIf="mapLoaded" class="button-wrapper">
+            <button type="button" class="btn" (click)="changeMapStyle()">
+                <span class="{{lightStyle ? 'fa fa-map' : 'fa fa-map-o'}}"></span>
+            </button>
+        </div>
+    </div>
+</div>e
