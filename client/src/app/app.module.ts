@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 // ngx-bootstrap modules
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 // components
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ import { DatePipe } from '@angular/common';
     HttpModule,
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
+    PopoverModule.forRoot(),
     AppRoutingModule
   ],
   providers: [EnvironmentDataService, PIService, DatePipe],

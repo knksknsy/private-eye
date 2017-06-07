@@ -1,23 +1,22 @@
-.card {
-    width: 32vw;
-    // height: 37.5vh;
-    .card-header {
-        padding: 5px;
-        text-align: center;
+.card-header {
+    padding: 5px;
+    text-align: center;
+    .btn-outline-primary {
+        padding: 3px 5px 0 5px;
     }
-    .card-block {
-        padding: 5px;
-        padding-bottom: 0;
+}
+.card-block {
+    padding: 5px;
+    padding-bottom: 0;
+}
+.card-footer {
+    padding: 5px;;
+    display: inline-flex;
+    justify-content: space-between;
+    .card-title {
+        margin: auto;
     }
-    .card-footer {
-        padding: 5px;;
-        display: inline-flex;
-        justify-content: space-between;
-        .card-title {
-            margin: auto;
-        }
-        .card-text {
-            margin: auto;
-        }
+    .card-text {
+        margin: auto;
     }
 }

@@ -28,6 +28,8 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
         if (Object.keys(ranges).indexOf(range) === -1 || Object.keys(sensors).indexOf(sensor) === -1) {
             reject({ message: 'INVALID REQUEST.' });
         }
+        const mongo_model = sensors[sensor].model[0];
+        const model_sensor = sensors[sensor].name;
 
         // check if pi_ID is registered
         PIModel.findById({ _id: pi_ID }, (err, pi) => {
@@ -35,8 +37,6 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
                 reject(err);
             }
 
-            const mongo_model = sensors[sensor].model;
-            const model_sensor = sensors[sensor].name;
             let timespan;
             let endDate = new time.Date();
             let startDate;

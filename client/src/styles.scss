@@ -9,9 +9,27 @@
 
 .card.card-inverse {
     background-color: #191a1a;
-    border-color: #1C77B8;
+    border-color: #1c77b8;
 }
 
 body {
-    background-color: #292B2C;
+    background-color: #292b2c;
+}
+
+.popover {
+    padding: 0;
+    border-color: #1c77b8;
+    .popover-content {
+        padding: 0;
+        .list-group {
+            .list-group-item.active {
+                background-color: #1c77b8;
+            }
+            .list-group-item {
+                background-color: #191a1a;
+                color: #fff;
+                padding: 0 15px 0 15px;
+            }
+        }
+    }
 }

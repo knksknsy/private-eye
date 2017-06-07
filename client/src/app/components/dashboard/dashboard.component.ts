@@ -1,4 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
+import { PIService } from '../../services/pi.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +8,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 })
 export class DashboardComponent implements OnChanges {
   private _piID: string;
+  public sensors: Array<String>;
 
   get piID(): string {
     return this._piID;
@@ -17,9 +19,14 @@ export class DashboardComponent implements OnChanges {
     this._piID = piID;
   }
 
-  constructor() { }
+  constructor(private piService: PIService) { }
 
   ngOnChanges() {
+    this.piService.getPISensors(this.piID)
+    .subscribe((sensors) => {
+      this.sensors = sensors;
+      console.log('sensors', this.sensors);
+    });
     console.log('changed', this.piID);
   }
 

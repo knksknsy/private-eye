@@ -16,6 +16,7 @@ export class MapComponent implements OnInit {
   public isMapMinimized: boolean = false;
   public maximizedMapHeight: number;
   public minimizedMapHeight: number;
+  public design: string = "dark";
 
   constructor(private piService: PIService, private router: Router) { }
 
@@ -48,11 +49,11 @@ export class MapComponent implements OnInit {
     this.maximizedMapHeight = document.getElementById('map').offsetHeight / 2;
     // var icon = L.icon({
     //   iconUrl: 'assets/icons/private-eye-marker.png',
-    //   iconSize: [25,25],
-    //   iconAnchor: [15,10]
+    //   iconSize: [49,72],
+    //   iconAnchor: [49,25]
     // });
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+    L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}`, {
       maxZoom: 18,
       accessToken: 'pk.eyJ1IjoiZHNjaGVuZ2lzIiwiYSI6ImNqM2swYm1yZjAwNDEzMnA5eGpkeWV2b2YifQ.u4c09v8K-TaPSgMC6VCJhA'
     }).addTo(this.map);
@@ -60,6 +61,7 @@ export class MapComponent implements OnInit {
     this.piService.getPIs()
       .subscribe((pis) => {
         pis.forEach((element) => {
+          // let marker = L.marker([element.latitude, element.longitude], { icon: icon, id: element._id })
           let marker = L.marker([element.latitude, element.longitude], { id: element._id })
             .on('click', (event) => {
                 console.log(event);

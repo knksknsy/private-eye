@@ -1,5 +1,10 @@
 <div *ngIf="chartData && chartLabels" class="card card-inverse">
-  <div class="card-header">{{title}} in {{unit}}</div>
+  <div class="card-header">
+    <span>{{title}} in {{unit}}</span>
+    <button type="button" class="btn btn-outline-primary pull-right" [popover]="popover" placement="left" container="body">
+      <span class="fa fa-ellipsis-v" aria-hidden="true"></span>
+    </button>
+    </div>
   <div class="card-block">
     <canvas id="{{canvasID}}"></canvas>
   </div>
@@ -9,3 +14,9 @@
     <p class="card-text text-muted">max: {{minMaxValue?.max}} {{unit}}</p>
   </div>
 </div>
+
+<ng-template #popover>
+  <div class="list-group">
+    <button *ngFor="let modus of modi" type="button" class="list-group-item" [ngClass]="{active: modus.selected}" (click)="changeModus(modus.name)">{{modus.title}}</button>
+  </div>
+</ng-template>
