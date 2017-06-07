@@ -1,0 +1,155 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Private Eye",
+		"_postman_id": "1bcc42b9-d9d6-e2a2-65fe-aa49f9af31ee",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "airpressure",
+			"description": "Endpoint for writing new airpressure data to the database.",
+			"item": [
+				{
+					"name": "airpressure",
+					"request": {
+						"url": "http://localhost:3000/airpressure",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pi_ID\": \"ABC\",\n    \"datetime\": \"2017-06-01T08:46:01.000Z\",\n    \"temp_C\": 27.10,\n    \"pressure_Pa\": 99321.00,\n    \"altitude_m\": 168.62\n}"
+						},
+						"description": "Send and save new airpressure data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "data",
+			"description": "Get arbitrary data for specified range, sensor and an addressed pi.",
+			"item": [
+				{
+					"name": "data/:range/:sensor/:pi_ID",
+					"request": {
+						"url": {
+							"raw": "http://localhost:3000/data/:range/:sensor/:pi_ID",
+							"protocol": "http",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"data",
+								":range",
+								":sensor",
+								":pi_ID"
+							],
+							"query": [],
+							"variable": [
+								{
+									"key": "range",
+									"value": "month",
+									"description": "[live, day, week, month, year]"
+								},
+								{
+									"key": "sensor",
+									"value": "temp",
+									"description": "[temp, airpressure, altitude, humidity]"
+								},
+								{
+									"key": "pi_ID",
+									"value": "ABC",
+									"description": "PI's ID"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Get data by specified range, sensor and an addressed PI."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pis",
+			"description": "",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"url": "http://localhost:3000/pis/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"ID-String\",\n\t\"latitude\": 49.00,\n\t\"longitude\": 9.00,\n\t\"modules\": [\"AirPressure\", \"Humidity\"]\n}"
+						},
+						"description": "Register and save a new PI."
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"url": "http://localhost:3000/pis/list",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Get a list of all registered PIs."
+					},
+					"response": []
+				},
+				{
+					"name": "sensors",
+					"request": {
+						"url": {
+							"raw": "http://localhost:3000/pis/sensors/:pi_ID",
+							"protocol": "http",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pis",
+								"sensors",
+								":pi_ID"
+							],
+							"query": [],
+							"variable": [
+								{
+									"key": "pi_ID",
+									"value": "ABC",
+									"description": "PI's ID"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Get registered sensors of a PI."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
