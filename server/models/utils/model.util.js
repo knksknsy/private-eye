@@ -12,11 +12,16 @@ const humidity = 'Humidity';
 
 module.exports = {
     sensors: {
-        // 'sensorName' : { model: mongoModel, name: 'mongoSensorName'}
-        'temp': { model: airpressure, name: 'temp_C' },
-        'airpressure': { model: airpressure, name: 'pressure_Pa' },
-        'altitude': { model: airpressure, name: 'altitude_m' },
-        'humidity': { model: humidity, name: 'humidity_pct' }
+        // 'sensorName' : { model: [mongoModel1, ..., mongoModelN], name: 'mongoSensorName'}
+        'temp': { model: [airpressure, humidity], name: 'temp_C', title: 'Temperatur', unit: '°C' },
+        'pressure': { model: [airpressure], name: 'pressure_Pa', title: 'Luftdruck', unit: 'Pa' },
+        'altitude': { model: [airpressure], name: 'altitude_m', title: 'Höhenlage', unit: 'm' },
+        'humidity': { model: [humidity], name: 'humidity_pct', title: 'Luftfeuchtigkeit', unit: '%' }
+    },
+    modules: {
+        'AirPressure': ['temp_C', 'pressure_Pa', 'altitude_m'],
+        'Humidity': ['temp_C', 'humidity_pct']
+
     },
     ranges: {
         live: 'live',
