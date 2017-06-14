@@ -34,12 +34,10 @@ router.post('/mock', (req, res, next) => {
                 if (err) {
                     return next(err);
                 }
-                if (humidity) {
-                    return res.send(200);
-                }
             }
         );
     });
+    return res.send(200);
 });
 
 // Weather data is added every 1 or 5 minutes
