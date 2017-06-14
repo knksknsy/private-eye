@@ -13,6 +13,34 @@ var mongoose = require('mongoose');
 var AirPressureModel = mongoose.model('AirPressure');
 var PIModel = mongoose.model('PI');
 
+router.post('/mock', (req, res, next) => {
+    if (!req.body || !req.body.data) {
+        return res.status(500);
+    }
+    req.body.data.forEach((value) => {
+        if (!value.pi_ID || !value.datetime || !value.temp_C || !value.pressure_Pa || !value.altitude_m) {
+            return res.status(500);
+        }
+        AirPressureModel.create(
+            {
+                pi_id: value.pi_ID,
+                datetime: new Date(value.datetime),
+                temp_C: value.temp_C,
+                pressure_Pa: value.pressure_Pa,
+                altitude_m: value.altitude_m
+            },
+            (err, pressure) => {
+                if (err) {
+                    return res.status(500);
+                }
+                if (pressure) {
+                    return res.send(200);
+                }
+            }
+        );
+    });
+});
+
 // Weather data is added every 1 or 5 minutes
 router.post('/', (req, res) => {
     if (!req.body || !req.body.pi_ID || !req.body.datetime || !req.body.temp_C || !req.body.pressure_Pa || !req.body.altitude_m) {

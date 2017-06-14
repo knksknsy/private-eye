@@ -14,9 +14,8 @@ var PIModel = mongoose.model('PI');
 const moduleNames = require('../../models/utils/model.util').modules;
 const sensors = require('../../models/utils/model.util').sensors;
 
-router.get('/register', (req, res) => {
+router.post('/register', (req, res) => {
     if (!req.body || !req.body.id || !req.body.latitude || !req.body.longitude || !req.body.modules) {
-        console.log('error1');
         return res.status(500);
     }
     PIModel.create(
@@ -28,11 +27,9 @@ router.get('/register', (req, res) => {
         },
         (err, pi) => {
             if (err) {
-                console.log('error2', err);
                 return res.status(500);
             }
             if (pi) {
-                console.log('pi', pi);
                 return res.send(200);
             }
         }
