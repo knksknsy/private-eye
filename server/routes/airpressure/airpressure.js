@@ -15,11 +15,11 @@ var PIModel = mongoose.model('PI');
 
 router.post('/mock', (req, res, next) => {
     if (!req.body || !req.body.data) {
-        return res.status(500);
+        return res.status(500).json({ 'message': 'Body invalid.' });
     }
     req.body.data.forEach((value) => {
         if (!value.pi_ID || !value.datetime || !value.temp_C || !value.pressure_Pa || !value.altitude_m) {
-            return res.status(500);
+            return res.status(500).json({ 'message': 'Body invalid.' });
         }
         AirPressureModel.create(
             {
@@ -31,7 +31,7 @@ router.post('/mock', (req, res, next) => {
             },
             (err, pressure) => {
                 if (err) {
-                    return res.status(500);
+                    return next(err);
                 }
                 if (pressure) {
                     return res.send(200);
@@ -42,13 +42,13 @@ router.post('/mock', (req, res, next) => {
 });
 
 // Weather data is added every 1 or 5 minutes
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
     if (!req.body || !req.body.pi_ID || !req.body.datetime || !req.body.temp_C || !req.body.pressure_Pa || !req.body.altitude_m) {
-        return res.status(500);
+        return res.status(500).json({ 'message': 'Body invalid.' });
     }
     // check if pi_ID is registered
     PIModel.findById({ _id: req.body.pi_ID }, (err, pi) => {
-        if (err) return res.status(403);
+        if (err) return next(err);
         AirPressureModel.create(
             {
                 pi_id: pi._id,
@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
                 altitude_m: req.body.altitude_m
             },
             (err, data) => {
-                if (err) return res.status(500);
+                if (err) return next(err);
                 if (data) return res.send(200);
             }
         );

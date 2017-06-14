@@ -14,9 +14,9 @@ var PIModel = mongoose.model('PI');
 const moduleNames = require('../../models/utils/model.util').modules;
 const sensors = require('../../models/utils/model.util').sensors;
 
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
     if (!req.body || !req.body.id || !req.body.latitude || !req.body.longitude || !req.body.modules) {
-        return res.status(500);
+        return res.status(500).json({ 'message': 'Body invalid.' });
     }
     PIModel.create(
         {
@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
         },
         (err, pi) => {
             if (err) {
-                return res.status(500);
+                return next(err);
             }
             if (pi) {
                 return res.send(200);
@@ -36,16 +36,16 @@ router.post('/register', (req, res) => {
     );
 });
 
-router.get('/list', (req, res) => {
+router.get('/list', (req, res, next) => {
     PIModel.find({}, (err, pis) => {
-        if (err) return res.status(500);
+        if (err) return next(err);
         return res.send(pis);
     });
 });
 
-router.get('/sensors/:pi_ID', (req, res) => {
+router.get('/sensors/:pi_ID', (req, res, next) => {
     PIModel.findById({ _id: req.params.pi_ID }, (err, pi) => {
-        if (err) return res.status(500).send(err);
+        if (err) return next(err);
         let sensorsList = []
         // store sensors in array
         pi.modules.forEach((moduleModel) => {
