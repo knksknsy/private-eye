@@ -11,6 +11,7 @@ const router = express.Router();
 
 const pis = require('./pis/pis');
 const airpressure = require('./airpressure/airpressure');
+const humidity = require('./humidity/humidity');
 const data = require('./data/data');
 
 router.get('/', (req, res) => {
@@ -22,6 +23,9 @@ router.use('/pis', pis);
 
 // Route is used for storing new data to MongoDB's AirPressure model (PI's endpoint)
 router.use('/airpressure', airpressure);
+
+// Route is used for storing new data to MongoDB's Humidity model (PI's endpoint)
+router.use('/humidity', humidity);
 
 // Route is used for getting arbitrary data by range and sensor (Client's endpoint)
 router.use('/data', data);
