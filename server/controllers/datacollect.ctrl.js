@@ -9,8 +9,8 @@
 var mongoose = require('mongoose');
 var PIModel = mongoose.model('PI');
 
-const time = require('time');
-var timeZoneCtrl = require('./timezone.ctrl');
+// const time = require('time');
+// var timeZoneCtrl = require('./timezone.ctrl');
 
 const sensors = require('../models/utils/model.util').sensors;
 const ranges = require('../models/utils/model.util').ranges;
@@ -38,43 +38,49 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
             }
 
             let timespan;
-            let endDate = new time.Date();
+            let endDate = new Date();
+            // let endDate = new time.Date();
             let startDate;
 
             switch (range) {
                 case ranges.live:
                     // Collects live- and previous 6 hours of arbitrary AirPressure  data
                     timespan = 6;
-                    startDate = new time.Date(new time.Date().setHours(endDate.getHours() - timespan));
+                    startDate = new Date(new Date().setHours(endDate.getHours() - timespan));
+                    // startDate = new time.Date(new time.Date().setHours(endDate.getHours() - timespan));
                     break;
                 case ranges.day:
                     // Collects previous 24 hours of arbitrary AirPressure data
                     timespan = 1;
-                    startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
+                    startDate = new Date(new Date().setDate(endDate.getDate() - timespan));
+                    // startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
                     break;
                 case ranges.week:
                     //Collects previous 7 days of arbitrary AirPressure data
                     timespan = 7;
-                    startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
+                    startDate = new Date(new Date().setDate(endDate.getDate() - timespan));
+                    // startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
                     break;
                 case ranges.month:
                     //Collects previous 31 days of arbitrary AirPressure data
                     timespan = 1;
-                    startDate = new time.Date(new time.Date().setMonth(endDate.getMonth() - timespan));
+                    startDate = new Date(new Date().setMonth(endDate.getMonth() - timespan));
+                    // startDate = new time.Date(new time.Date().setMonth(endDate.getMonth() - timespan));
                     break;
                 case ranges.year:
                     //Collects previous 365 days of arbitrary AirPressure data
                     timespan = 1;
-                    startDate = new time.Date(new time.Date().setFullYear(endDate.getFullYear() - timespan));
+                    startDate = new Date(new Date().setFullYear(endDate.getFullYear() - timespan));
+                    // startDate = new time.Date(new time.Date().setFullYear(endDate.getFullYear() - timespan));
                     break;
                 default:
                     reject({ message: 'INVALID REQUEST' });
             }
 
-            timeZoneCtrl.getTimeZone(pi_ID)
-                .then((timezone) => {
-                    endDate.setTimezone(timezone);
-                    startDate.setTimezone(timezone);
+            // timeZoneCtrl.getTimeZone(pi_ID)
+            //     .then((timezone) => {
+            //         endDate.setTimezone(timezone);
+            //         startDate.setTimezone(timezone);
 
                     mongoose.model(mongo_model)
                         .find({ pi_id: pi_ID })
@@ -101,10 +107,10 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
                             });
                             resolve({ data: yAxis, labels: xAxis });
                         });
-                })
-                .catch((error) => {
-                    reject(error);
-                });
+                // })
+                // .catch((error) => {
+                //     reject(error);
+                // });
         });
     });
 }
