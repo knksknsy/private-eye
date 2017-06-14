@@ -29,7 +29,7 @@ router.post('/mock', (req, res, next) => {
                 pressure_Pa: value.pressure_Pa,
                 altitude_m: value.altitude_m
             },
-            (err, pressure) => {
+            (err) => {
                 if (err) {
                     return next(err);
                 }

@@ -30,7 +30,7 @@ router.post('/mock', (req, res, next) => {
                 temp_C: value.temp_C,
                 humidity_pct: value.humidity_pct,
             },
-            (err, humidity) => {
+            (err) => {
                 if (err) {
                     return next(err);
                 }

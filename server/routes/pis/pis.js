@@ -25,15 +25,13 @@ router.post('/register', (req, res, next) => {
             longitude: req.body.longitude,
             modules: req.body.modules
         },
-        (err, pi) => {
+        (err) => {
             if (err) {
                 return next(err);
             }
-            if (pi) {
-                return res.send(200);
-            }
         }
     );
+    return res.send(200);
 });
 
 router.get('/list', (req, res, next) => {
