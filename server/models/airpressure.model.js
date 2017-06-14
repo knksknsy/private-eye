@@ -7,7 +7,7 @@
 */
 
 var mongoose = require('mongoose');
-require('./pi.model');
+// require('./pi.model');
 var Schema = mongoose.Schema;
 
 var airpressureSchema = Schema({

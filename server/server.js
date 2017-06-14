@@ -35,17 +35,17 @@ app.use(express.static(path.join(__dirname, '../client/src')));
 
 // Cross Origin middleware
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next()
-})
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Set api routes
 app.use('/', api);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-res.sendFile(path.join(__dirname, '../client/src/index.html'));
+  res.sendFile(path.join(__dirname, '../client/src/index.html'));
 });
 
 // Catch unauthorised errors
