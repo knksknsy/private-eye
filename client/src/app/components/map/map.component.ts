@@ -29,11 +29,13 @@ export class MapComponent implements OnInit {
   constructor(private piService: PIService, private router: Router) { }
 
   ngOnInit() {
+    window.alert('ngOnInit() called');
     this.initLayers();
     this.getLocation();
   }
 
   initLayers() {
+    window.alert('initLayers()');
     this.lightMap = L.tileLayer(this.tileServer, {
       maxZoom: this.maxZoom,
       style: 'light_all',
@@ -54,12 +56,15 @@ export class MapComponent implements OnInit {
       return this.setView(point, this._zoom, { pan: options });
     }
 
-    this.map = L.map("map").setView([lat, lng], 9)
-      .on('zoomstart', (event) => {
-        if (this.isMapMinimized) {
-          this.isMapMinimized = !this.isMapMinimized;
-        }
-      });
+    this.map = L.map("map").setView([lat, lng], 9);
+
+    window.alert('map initialized');
+
+    this.map.on('zoomstart', (event) => {
+      if (this.isMapMinimized) {
+        this.isMapMinimized = !this.isMapMinimized;
+      }
+    });
 
     this.maximizedMapHeight = document.getElementById('map').offsetHeight / 2;
     // var icon = L.icon({
@@ -92,11 +97,14 @@ export class MapComponent implements OnInit {
   }
 
   public getLocation() {
+    window.alert('getLocation() called');
     // set coordinates according to client's position
     navigator.geolocation.getCurrentPosition((location) => {
       if (!location) {
+        window.alert('default lat/long');
         this.initMap(48.759357, 9.162598);
       } else {
+        window.alert('browser lat/long');
         this.initMap(location.coords.latitude, location.coords.longitude);
       }
     });
