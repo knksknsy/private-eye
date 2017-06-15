@@ -6,21 +6,21 @@
 *  MIT License
 */
 
-const airpressure = 'AirPressure';
-const humidity = 'Humidity';
+const bmp180 = 'BMP180';
+const dht22 = 'DHT22';
 // const mongoModel = 'ModelName';
 
 module.exports = {
     sensors: {
         // 'sensorName' : { model: [mongoModel1, ..., mongoModelN], name: 'mongoSensorName'}
-        'temp': { model: [airpressure, humidity], name: 'temp_C', title: 'Temperatur', unit: '°C' },
-        'pressure': { model: [airpressure], name: 'pressure_Pa', title: 'Luftdruck', unit: 'Pa' },
-        'altitude': { model: [airpressure], name: 'altitude_m', title: 'Höhenlage', unit: 'm' },
-        'humidity': { model: [humidity], name: 'humidity_pct', title: 'Luftfeuchtigkeit', unit: '%' }
+        'temp': { model: [bmp180, dht22], name: 'temp_C', title: 'Temperatur', unit: '°C' },
+        'pressure': { model: [bmp180], name: 'pressure_Pa', title: 'Luftdruck', unit: 'Pa' },
+        'altitude': { model: [bmp180], name: 'altitude_m', title: 'Höhenlage', unit: 'm' },
+        'humidity': { model: [dht22], name: 'humidity_pct', title: 'Luftfeuchtigkeit', unit: '%' }
     },
     modules: {
-        'AirPressure': ['temp_C', 'pressure_Pa', 'altitude_m'],
-        'Humidity': ['temp_C', 'humidity_pct']
+        'BMP180': ['temp_C', 'pressure_Pa', 'altitude_m'],
+        'DHT22': ['temp_C', 'humidity_pct']
 
     },
     ranges: {

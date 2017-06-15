@@ -15,5 +15,5 @@ mongoose.connection.on('disconnected', function () {
 });
 
 require('./pi.model');
-require('./airpressure.model');
-require('./humidity.model');
+require('./bmp180.model');
+require('./dht22.model');

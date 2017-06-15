@@ -7,14 +7,16 @@
 */
 
 var mongoose = require('mongoose');
+// require('./pi.model');
 var Schema = mongoose.Schema;
 
-var humiditySchema = Schema({
+var BMP180Schema = Schema({
     // pi_id: { type: Schema.Types.ObjectId, ref: 'PI' },
     pi_id: String,
     datetime: Date,
     temp_C: Number,
-    humidity_pct: Number,
+    pressure_Pa: Number,
+    altitude_m: Number,
 });
 
-mongoose.model('Humidity', humiditySchema);
+mongoose.model('BMP180', BMP180Schema);

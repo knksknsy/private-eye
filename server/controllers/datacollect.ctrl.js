@@ -44,31 +44,31 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
 
             switch (range) {
                 case ranges.live:
-                    // Collects live- and previous 6 hours of arbitrary AirPressure  data
+                    // Collects live- and previous 6 hours of arbitrary data
                     timespan = 6;
                     startDate = new Date(new Date().setHours(endDate.getHours() - timespan));
                     // startDate = new time.Date(new time.Date().setHours(endDate.getHours() - timespan));
                     break;
                 case ranges.day:
-                    // Collects previous 24 hours of arbitrary AirPressure data
+                    // Collects previous 24 hours of arbitrarydata
                     timespan = 1;
                     startDate = new Date(new Date().setDate(endDate.getDate() - timespan));
                     // startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
                     break;
                 case ranges.week:
-                    //Collects previous 7 days of arbitrary AirPressure data
+                    //Collects previous 7 days of arbitrarydata
                     timespan = 7;
                     startDate = new Date(new Date().setDate(endDate.getDate() - timespan));
                     // startDate = new time.Date(new time.Date().setDate(endDate.getDate() - timespan));
                     break;
                 case ranges.month:
-                    //Collects previous 31 days of arbitrary AirPressure data
+                    //Collects previous 31 days of arbitrarydata
                     timespan = 1;
                     startDate = new Date(new Date().setMonth(endDate.getMonth() - timespan));
                     // startDate = new time.Date(new time.Date().setMonth(endDate.getMonth() - timespan));
                     break;
                 case ranges.year:
-                    //Collects previous 365 days of arbitrary AirPressure data
+                    //Collects previous 365 days of arbitrarydata
                     timespan = 1;
                     startDate = new Date(new Date().setFullYear(endDate.getFullYear() - timespan));
                     // startDate = new time.Date(new time.Date().setFullYear(endDate.getFullYear() - timespan));

@@ -7,16 +7,14 @@
 */
 
 var mongoose = require('mongoose');
-// require('./pi.model');
 var Schema = mongoose.Schema;
 
-var airpressureSchema = Schema({
+var DHT22Schema = Schema({
     // pi_id: { type: Schema.Types.ObjectId, ref: 'PI' },
     pi_id: String,
     datetime: Date,
     temp_C: Number,
-    pressure_Pa: Number,
-    altitude_m: Number,
+    humidity_pct: Number,
 });
 
-mongoose.model('AirPressure', airpressureSchema);
+mongoose.model('DHT22', DHT22Schema);

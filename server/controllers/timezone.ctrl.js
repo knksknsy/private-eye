@@ -53,13 +53,13 @@ module.exports.getTimeZone = function (pi_ID) {
 //     if (units.indexOf(interval_unit) !== -1) {
 //         switch (interval_unit) {
 //             case 'min':
-//                 AirPressureModel.find({ pi_id: pi_ID })
+//                 BMP180Model.find({ pi_id: pi_ID })
 //                     .where('datetime').gt(startDate).lte(endDate)
 //                     .sort('datetime')
 //                     .select('datetime ' + sensor)
-//                     .exec((err, airPressureData) => {
+//                     .exec((err, bmp180data) => {
 //                         let data = [];
-//                         airPressureData.forEach((node) => {
+//                         bmp180data.forEach((node) => {
 //                             data.push({ x: node.datetime, y: node[sensor] });
 //                         });
 //                         return data;
@@ -67,11 +67,11 @@ module.exports.getTimeZone = function (pi_ID) {
 //                 break;
 //             case 'h':
 
-//                 AirPressureModel.find({ pi_id: pi_ID })
+//                 BMP180Model.find({ pi_id: pi_ID })
 //                     .where('datetime').gt(startDate).lte(endDate)
 //                     .sort('datetime')
 //                     .select('datetime ' + sensor)
-//                     .exec((err, airPressureData) => {
+//                     .exec((err, bmp180data) => {
 //                         // data:
 //                         // [
 //                         //     { averageValues: [ { x: datetime, y: sensorValue } ] },
@@ -89,7 +89,7 @@ module.exports.getTimeZone = function (pi_ID) {
 //                         // Collect hourly data
 //                         for (let index = 0; index <= hours; index++) {
 //                             hourlySensorValues.push(
-//                                 airPressureData.filter((node) => {
+//                                 bmp180data.filter((node) => {
 //                                     return node.datetime.getHours() === endDate.getHours() - index;
 //                                 })
 //                             );
@@ -127,7 +127,7 @@ module.exports.getTimeZone = function (pi_ID) {
 //                         // let maxValues = { maxValues: };
 //                         // let minValues = { minValues:};
 
-//                         airPressureData.forEach((node) => {
+//                         bmp180data.forEach((node) => {
 //                             data.push({ x: node.datetime, y: node[sensor] });
 //                         });
 //                         return data;
