@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 var AirPressureModel = mongoose.model('AirPressure');
 var PIModel = mongoose.model('PI');
 
-router.post('/mock', (req, res, next) => {
+router.post('/batch', (req, res, next) => {
     if (!req.body || !req.body.data) {
         return res.status(500).json({ 'message': 'Body invalid.' });
     }
