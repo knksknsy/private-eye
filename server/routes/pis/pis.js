@@ -15,12 +15,12 @@ const moduleNames = require('../../models/utils/model.util').modules;
 const sensors = require('../../models/utils/model.util').sensors;
 
 router.post('/register', (req, res, next) => {
-    if (!req.body || !req.body.id || !req.body.latitude || !req.body.longitude || !req.body.modules) {
+    if (!req.body || !req.body.pi_ID || !req.body.latitude || !req.body.longitude || !req.body.modules) {
         return res.status(500).json({ 'message': 'Body invalid.' });
     }
     PIModel.create(
         {
-            _id: req.body.id,
+            _id: req.body.pi_ID,
             latitude: req.body.latitude,
             longitude: req.body.longitude,
             modules: req.body.modules
