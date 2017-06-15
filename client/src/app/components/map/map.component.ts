@@ -99,15 +99,16 @@ export class MapComponent implements OnInit {
   public getLocation() {
     window.alert('getLocation() called');
     // set coordinates according to client's position
-    navigator.geolocation.getCurrentPosition((location) => {
-      if (!location) {
-        window.alert('default lat/long');
-        this.initMap(48.759357, 9.162598);
-      } else {
-        window.alert('browser lat/long');
-        this.initMap(location.coords.latitude, location.coords.longitude);
-      }
-    });
+    // navigator.geolocation.getCurrentPosition((location) => {
+    //   if (!location) {
+    //     window.alert('default lat/long');
+    //     this.initMap(48.759357, 9.162598);
+    //   } else {
+    //     window.alert('browser lat/long');
+    //     this.initMap(location.coords.latitude, location.coords.longitude);
+    //   }
+    // });
+    this.initMap(48.759357, 9.162598);
   }
 
   public isMapLoaded() {
