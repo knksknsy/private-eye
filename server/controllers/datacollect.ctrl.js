@@ -81,36 +81,37 @@ module.exports.collectDataByRange = function (range, sensor, pi_ID) {
             //     .then((timezone) => {
             //         endDate.setTimezone(timezone);
             //         startDate.setTimezone(timezone);
+            mongoose.model(mongo_model)
+                .find({ pi_id: pi_ID })
+                .where('datetime').gte(startDate).lte(endDate)
+                .sort('datetime')
+                .select('datetime ' + model_sensor)
+                .exec((err, modelData) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    // // Data structure version 1
+                    // let map = [];
+                    // modelData.forEach((data) => {
+                    //     map.push({ x: data.datetime, y: data[model_sensor] });
+                    // });
+                    // resolve(map);
 
-                    mongoose.model(mongo_model)
-                        .find({ pi_id: pi_ID })
-                        .where('datetime').gte(startDate).lte(endDate)
-                        .sort('datetime')
-                        .select('datetime ' + model_sensor)
-                        .exec((err, modelData) => {
-                            if (err) {
-                                reject(err);
-                            }
-                            // // Data structure version 1
-                            // let map = [];
-                            // modelData.forEach((data) => {
-                            //     map.push({ x: data.datetime, y: data[model_sensor] });
-                            // });
-                            // resolve(map);
-
-                            // Data structure version 2
-                            let xAxis = [];
-                            let yAxis = [];
-                            modelData.forEach((element) => {
-                                xAxis.push(element.datetime);
-                                yAxis.push(element[model_sensor]);
-                            });
-                            resolve({ data: yAxis, labels: xAxis });
-                        });
-                // })
-                // .catch((error) => {
-                //     reject(error);
-                // });
+                    // Data structure version 2
+                    let xAxis = [];
+                    let yAxis = [];
+                    modelData.forEach((element) => {
+                        xAxis.push(element.datetime);
+                        yAxis.push(element[model_sensor]);
+                    });
+                    resolve({ data: yAxis, labels: xAxis });
+                });
+            // })
+            // .catch((error) => {
+            //     reject(error);
+            // });
         });
     });
 }
+
+

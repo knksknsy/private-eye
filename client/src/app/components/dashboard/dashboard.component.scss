@@ -1,11 +1,23 @@
 .container-fluid {
-    padding: 15px;
+    padding: 0 15px 15px 15px;
     .card-deck {
         justify-content: flex-start;
-        app-dashboard-live-card {
-            width: 32.5vw;
-            padding: 15px;
-            padding-top: 0;
+        app-dashboard-card {
+            padding-bottom: 15px;
         }
+    }
+}
+
+// medium to extra large devices
+@media (min-width: 768px) {
+    app-dashboard-card {
+        max-width: 33vw;
+    }
+}
+
+// extra small to small devices
+@media (min-width: 575px) and (max-width: 767px) {
+    app-dashboard-card {
+        padding: 0 !important;
     }
 }

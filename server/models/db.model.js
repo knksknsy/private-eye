@@ -17,3 +17,5 @@ mongoose.connection.on('disconnected', function () {
 require('./pi.model');
 require('./bmp180.model');
 require('./dht22.model');
+require('./ppd42.model');
+require('./gps.model');

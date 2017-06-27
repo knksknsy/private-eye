@@ -27,7 +27,6 @@ export class DashboardComponent implements OnChanges {
       this.sensors = sensors;
       console.log('sensors', this.sensors);
     });
-    console.log('changed', this.piID);
   }
 
 }

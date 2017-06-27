@@ -17,7 +17,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { AppComponent } from './app.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { DashboardLiveCardComponent } from './components/dashboard-live-card/dashboard-live-card.component';
+import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { MapComponent } from './components/map/map.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -34,7 +34,7 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     MenuBarComponent,
     MenuComponent,
-    DashboardLiveCardComponent,
+    DashboardCardComponent,
     HomeViewComponent,
     MapComponent,
     DashboardComponent

@@ -1,10 +1,10 @@
 <div class="container-fluid">
-    <div class="card-deck">
-        <app-dashboard-live-card *ngFor="let sensor of sensors" [piID]="piID" [sensor]="sensor.sensor" [title]="sensor.title" [unit]="sensor.unit"></app-dashboard-live-card>
+    <div class="card-deck row">
+        <app-dashboard-card class="col-md" *ngFor="let sensor of sensors" [piID]="piID" [sensor]="sensor.sensor" [title]="sensor.title" [unit]="sensor.unit"></app-dashboard-card>
 
-        <!--<app-dashboard-live-card [piID]="piID" sensor="temp" title="Temperatur" unit="°C"></app-dashboard-live-card>
-        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Luftdruck" unit="Pa"></app-dashboard-live-card>
-        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Höhenlage" unit="m"></app-dashboard-live-card>
-        <app-dashboard-live-card [piID]="piID" sensor="temp" title="Luftfeuchtigkeit" unit="%"></app-dashboard-live-card>-->
+        <!--<app-dashboard-card [piID]="piID" sensor="temp_C" title="Temperatur" unit="°C"></app-dashboard-card>
+        <app-dashboard-card [piID]="piID" sensor="temp_C" title="Luftdruck" unit="Pa"></app-dashboard-card>
+        <app-dashboard-card [piID]="piID" sensor="temp_C" title="Höhenlage" unit="m"></app-dashboard-card>
+        <app-dashboard-card [piID]="piID" sensor="temp_C" title="Luftfeuchtigkeit" unit="%"></app-dashboard-card>-->
     </div>
 </div>

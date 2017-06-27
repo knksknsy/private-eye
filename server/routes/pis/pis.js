@@ -14,6 +14,7 @@ var PIModel = mongoose.model('PI');
 const moduleNames = require('../../models/utils/model.util').modules;
 const sensors = require('../../models/utils/model.util').sensors;
 
+// register new PI
 router.post('/register', (req, res, next) => {
     if (!req.body || !req.body.pi_ID || !req.body.latitude || !req.body.longitude || !req.body.modules) {
         return res.status(500).json({ 'message': 'Body invalid.' });
@@ -25,25 +26,48 @@ router.post('/register', (req, res, next) => {
             longitude: req.body.longitude,
             modules: req.body.modules
         },
-        (err) => {
+        (err, pi) => {
             if (err) {
                 return next(err);
             }
+            return res.send(200);
         }
     );
-    return res.send(200);
 });
 
+// update position of PI
+router.put('/gps', (req, res, next) => {
+    if (!req.body || !req.body.pi_ID || !req.body.latitude || !req.body.longitude || !req.body.datetime) {
+        return res.status(500).json({ 'message': 'Body invalid.' });
+    }
+    PIModel.findOneAndUpdate(
+        { _id: req.body.pi_ID },
+        { '$set': { latitude: req.body.latitude, longitude: req.body.longitude } },
+        { new: true })
+        .exec((err, update) => {
+            if (err) {
+                return next(err);
+            }
+            return res.sendStatus(200);
+        });
+});
+
+// get a list of all registered PIs
 router.get('/list', (req, res, next) => {
     PIModel.find({}, (err, pis) => {
-        if (err) return next(err);
+        if (err) {
+            return next(err);
+        }
         return res.send(pis);
     });
 });
 
+// get a list of all sensors of a PI
 router.get('/sensors/:pi_ID', (req, res, next) => {
     PIModel.findById({ _id: req.params.pi_ID }, (err, pi) => {
-        if (err) return next(err);
+        if (err) {
+            return next(err);
+        }
         let sensorsList = []
         // store sensors in array
         pi.modules.forEach((moduleModel) => {
@@ -59,11 +83,16 @@ router.get('/sensors/:pi_ID', (req, res, next) => {
         });
         sensorsList = [];
         unique.forEach((sensor) => {
-            let sensorName = sensor.split('_')[0];
+            // let sensorName;
+            // if (sensor.indexOf('_') !== -1) {
+            //     sensorName = sensor.split('_')[0];
+            // } else {
+            //     sensorName = sensor;
+            // }
             sensorsList.push({
-                sensor: sensorName,
-                title: sensors[sensorName].title,
-                unit: sensors[sensorName].unit
+                sensor: sensor,
+                title: sensors[sensor].title,
+                unit: sensors[sensor].unit
             });
         })
         return res.send(sensorsList);

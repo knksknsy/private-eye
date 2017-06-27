@@ -1,13 +1,22 @@
-import { Component, OnDestroy, OnChanges, Input } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { Component, OnDestroy, OnChanges, Input, ViewChild } from '@angular/core';
 import { EnvironmentDataService } from '../../services/environment-data.service';
 import Chart from 'chart.js';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/expand';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/mergeMap';
 
 @Component({
-  selector: 'app-dashboard-live-card',
-  templateUrl: './dashboard-live-card.component.html',
-  styleUrls: ['./dashboard-live-card.component.scss']
+  selector: 'app-dashboard-card',
+  templateUrl: './dashboard-card.component.html',
+  styleUrls: ['./dashboard-card.component.scss']
 })
-export class DashboardLiveCardComponent implements OnChanges, OnDestroy {
+export class DashboardCardComponent implements OnChanges, OnDestroy {
+  @ViewChild('pop') modiPopover;
   public modi = [
     { title: 'Live', name: 'live', selected: true },
     { title: 'Tag', name: 'day', selected: false },
@@ -15,6 +24,10 @@ export class DashboardLiveCardComponent implements OnChanges, OnDestroy {
     { title: 'Monat', name: 'month', selected: false },
     { title: 'Jahr', name: 'year', selected: false },
   ]
+  public defaultModus = { title: 'Live', name: 'live' };
+
+  public dataOb: Observable<any>;
+  public dataSub: Subscription;
 
   public chartData: Array<Number> = [];
   public chartLabels: Array<String> = [];
@@ -70,34 +83,67 @@ export class DashboardLiveCardComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.lineChart.destroy();
+    this.unsubscribeData();
   }
 
   ngOnChanges() {
     this.canvasID = this.sensor + this.title;
-    this.environmentDataService.getLiveData(this.piID, this.sensor, 'month')
-      .subscribe((liveData) => {
-        // if (this.lineChart) {
-        //   this.lineChart.destroy();
-        // }
-        this.initChart(liveData);
-      });
+    this.getContinuesData(this.defaultModus.name);
+  }
+
+  public unsubscribeData() {
+    this.dataOb = undefined;
+    this.dataSub.unsubscribe();
   }
 
   public changeModus(modusName: string) {
+    this.unsubscribeData();
+
     this.modi.forEach((modus) => {
       if (modus.name !== modusName) {
         modus.selected = false;
       } else {
         modus.selected = true;
+        this.defaultModus.title = modus.title;
       }
+    });
+
+    if (modusName === this.defaultModus.name) {
+      this.getContinuesData(modusName);
+
+    } else {
+      this.getData(modusName);
+    }
+    this.modiPopover.hide();
+  }
+
+  public getContinuesData(modus: string) {
+    this.dataOb = this.environmentDataService.getData(this.piID, this.sensor, modus);
+    this.dataSub = this.dataOb.expand(() => {
+      return Observable.timer(5000).concatMap(() => this.dataOb)
+    }).subscribe((data) => {
+      if (this.lineChart) {
+        this.lineChart.destroy();
+      }
+      this.initChart(data, false);
     });
   }
 
-  public initChart(liveData) {
+  public getData(modus: string) {
+    this.environmentDataService.getData(this.piID, this.sensor, modus)
+      .subscribe((data) => {
+        if (this.lineChart) {
+          this.lineChart.destroy();
+        }
+        this.initChart(data, true);
+      });
+  }
+
+  public initChart(liveData, animation: boolean) {
     if (document.getElementById(this.canvasID)) {
       let data: any;
       this.chartData = liveData.data;
-      this.chartLabels = this.environmentDataService.formatLiveDataLabels(liveData.labels);
+      this.chartLabels = this.environmentDataService.formatDataLabels(liveData.labels);
       this.minMaxValue = this.environmentDataService.getMinMaxValue(this.chartData);
 
       data = {
@@ -111,7 +157,7 @@ export class DashboardLiveCardComponent implements OnChanges, OnDestroy {
       };
       this.canvas = <HTMLCanvasElement>document.getElementById(this.canvasID);
       this.ctx = this.canvas.getContext('2d');
-      this.lineChart = new Chart(this.ctx, {
+      let options = {
         type: 'line',
         data: data,
         options: {
@@ -141,7 +187,11 @@ export class DashboardLiveCardComponent implements OnChanges, OnDestroy {
             }
           }
         }
-      });
+      }
+      if (!animation) {
+        options.options['animation'] = false;
+      }
+      this.lineChart = new Chart(this.ctx, options);
     }
   }
 }

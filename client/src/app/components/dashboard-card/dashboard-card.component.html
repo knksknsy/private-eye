@@ -1,0 +1,23 @@
+<div *ngIf="chartData && chartLabels" class="card card-inverse">
+  <div class="card-header">
+    <span>{{title}} in {{unit}}</span>
+    <span class="pull-left">{{defaultModus.title}}</span>
+    <button type="button" class="btn btn-outline-primary pull-right" #pop="bs-popover" [popover]="popover" placement="left" container="body">
+      <span class="fa fa-ellipsis-v" aria-hidden="true"></span>
+    </button>
+    </div>
+  <div class="card-block">
+    <canvas id="{{canvasID}}"></canvas>
+  </div>
+  <div class="card-footer">
+    <h6 class="card-title">{{chartData[chartData.length - 1] | number:'1.0-2'}} {{unit}}</h6>
+    <p class="card-text text-muted">min: {{minMaxValue?.min | number:'1.0-2'}} {{unit}}</p>
+    <p class="card-text text-muted">max: {{minMaxValue?.max | number:'1.0-2'}} {{unit}}</p>
+  </div>
+</div>
+
+<ng-template #popover>
+  <div class="list-group">
+    <button *ngFor="let modus of modi" type="button" class="list-group-item" [ngClass]="{active: modus.selected}" (click)="changeModus(modus.name)" [disabled]="modus.selected">{{modus.title}}</button>
+  </div>
+</ng-template>

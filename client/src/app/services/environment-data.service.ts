@@ -8,12 +8,12 @@ export class EnvironmentDataService {
 
   constructor(private http: Http, private datePipe: DatePipe) { }
 
-  getLiveData(pi_id: string, sensor: string, mode: string) {
+  getData(pi_id: string, sensor: string, mode: string) {
     return this.http.get('http://localhost:3000/data/' + mode + '/' + sensor + '/' + pi_id)
       .map((res) => res.json());
   }
 
-  formatLiveDataLabels(labels: Array<String>): Array<String> {
+  formatDataLabels(labels: Array<String>): Array<String> {
     let formatedLabels = [];
     labels.forEach((label) => {
       let formatedLabel;
