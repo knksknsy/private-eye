@@ -11,7 +11,8 @@
 // medium to extra large devices
 @media (min-width: 768px) {
     app-dashboard-card {
-        max-width: 33vw;
+        max-width: 25vw;
+        min-width: 25vw;
     }
 }
 

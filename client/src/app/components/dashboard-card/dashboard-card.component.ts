@@ -25,6 +25,7 @@ export class DashboardCardComponent implements OnChanges, OnDestroy {
     { title: 'Jahr', name: 'year', selected: false },
   ]
   public defaultModus = { title: 'Live', name: 'live' };
+  public refreshInterval = 1000 * 60;
 
   public dataOb: Observable<any>;
   public dataSub: Subscription;
@@ -110,7 +111,6 @@ export class DashboardCardComponent implements OnChanges, OnDestroy {
 
     if (modusName === this.defaultModus.name) {
       this.getContinuesData(modusName);
-
     } else {
       this.getData(modusName);
     }
@@ -120,7 +120,7 @@ export class DashboardCardComponent implements OnChanges, OnDestroy {
   public getContinuesData(modus: string) {
     this.dataOb = this.environmentDataService.getData(this.piID, this.sensor, modus);
     this.dataSub = this.dataOb.expand(() => {
-      return Observable.timer(5000).concatMap(() => this.dataOb)
+      return Observable.timer(this.refreshInterval).concatMap(() => this.dataOb)
     }).subscribe((data) => {
       if (this.lineChart) {
         this.lineChart.destroy();
