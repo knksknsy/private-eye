@@ -25,7 +25,7 @@ module.exports.getTimeZone = function (pi_ID) {
                     reject(err);
                 }
                 let location = piData.latitude + ',' + piData.longitude;
-                let url = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + location + '&timestamp=1458000000&key=' + timezoneKey;
+                let url = `https://maps.googleapis.com/maps/api/timezone/json?location=${location}&timestamp=1458000000&key=${timezoneKey}`;
                 request(url, (error, response, body) => {
                     if (error) {
                         reject(error);

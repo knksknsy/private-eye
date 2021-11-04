@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Server for Private-Eye",
   "license": "MIT",
-  "author": "Kaan K.",
+  "author": "Kaan Keskinsoy",
   "keywords": [
     "express",
     "middleware"
